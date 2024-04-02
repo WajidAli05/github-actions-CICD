@@ -1,7 +1,10 @@
-name: demo
+name: CI
 
 on:
   push:
+    branches:
+      - main
+  pull_request:
     branches:
       - main
 
@@ -15,3 +18,43 @@ jobs:
 
       - name: Installation
         run: npm install
+
+      - name: Linting
+        run: npm run lint
+
+      - name: Tests
+        run: npm test
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Notify on success
+        if: success()
+        run: echo "Build successful! Send notification here."
+
+      - name: Notify on failure
+        if: failure()
+        run: echo "Build failed! Send notification here."
+
+# name: demo
+
+# on:
+#   push:
+#     branches:
+#       - main
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     name: Build
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v2
+
+#       - name: Installation
+#         run: npm install
