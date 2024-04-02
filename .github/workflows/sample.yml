@@ -7,6 +7,10 @@ on:
   pull_request:
     branches:
       - main
+  fork:
+  branch_protection_rule: 
+    types: [created, deleted]
+    
 
 jobs:
   build:
