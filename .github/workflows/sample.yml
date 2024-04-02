@@ -1,0 +1,17 @@
+name: demo
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Installation
+        run: npm install
